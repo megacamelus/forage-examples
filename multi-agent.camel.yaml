@@ -18,7 +18,7 @@
             id: to-1358
             uri: langchain4j-agent:test
             parameters:
-              agentFactory: "#class:org.apache.camel.forage.agent.factory.ChainedAgentFactory"
+              agentFactory: "#class:org.apache.camel.forage.agent.factory.MultiAgentFactory"
               tags: users
         - log: ${body}
 - route:
@@ -41,7 +41,7 @@
             id: to-1359
             uri: langchain4j-agent:test
             parameters:
-              agentFactory: "#class:org.apache.camel.forage.agent.factory.ChainedAgentFactory"
+              agentFactory: "#class:org.apache.camel.forage.agent.factory.MultiAgentFactory"
         - log: ${body}
 - route:
     id: route-3369
