@@ -1,0 +1,39 @@
+- route:
+    id: route-4063
+    from:
+      uri: timer:yaml
+      parameters:
+        repeatCount: "1"
+      steps:
+        - setHeader:
+            id: setHeader-9346
+            expression:
+              simple:
+                expression: "1"
+            name: CamelLangChain4jAgentMemoryId
+        - setBody:
+            simple: give the details of user 123
+        - to:
+            id: to-1358
+            uri: langchain4j-agent:test
+            parameters:
+              agentFactory: "#class:org.apache.camel.forage.agent.factory.DefaultAgentFactory"
+              tags: users
+        - log: ${body}
+- route:
+    id: route-3369
+    from:
+      id: from-2978
+      uri: langchain4j-tools:userDb
+      parameters:
+        description: Query user database
+        parameter.userId: string
+        tags: users
+      steps:
+        - setBody:
+            id: setBody-2153
+            simple:
+              expression: '{"name": "John Doe", "id": "123"}'
+        - log:
+            id: log-4263
+            message: ${body}
