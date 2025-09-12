@@ -30,13 +30,12 @@ Once the application is published, you can run it directly from the container:
 docker run -it multi-agent:1.0-SNAPSHOT
 ```
 
-
 # Exporting to Quarkus:
 
 ## Step 0: run the exporter
 
 ```
-./export-multi-agent.sh
+./export-multi-agent-to-ceq.sh
 ```
 
 Then modify the files (or apply the patch [ details at the end ])
@@ -166,10 +165,27 @@ If you just want to test something, you can do:
 
 **NOTE**: tested on macOs only
 
-## Run the code:
+## Run the Quarkus code:
 
 
 ```
 export GOOGLE_API_KEY=<your key>
 mvn quarkus:dev
+```
+
+
+# Exporting to Camel Spring Boot:
+
+## Step 0: run the exporter
+
+```
+./export-multi-agent-to-csb.sh
+```
+
+## Run the Spring Boot code:
+
+
+```
+export GOOGLE_API_KEY=<your key>
+mvn spring-boot:run
 ```
