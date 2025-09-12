@@ -33,7 +33,7 @@ docker run -it multi-agent:1.0-SNAPSHOT
 
 # Exporting to Quarkus:
 
-Run:
+## Step 0: run the exporter
 
 ```
 ./export-multi-agent.sh
@@ -41,7 +41,7 @@ Run:
 
 Then modify the files (or apply the patch [ details at the end ])
 
-Step 1:
+## Step 1: Override outdated Camel LangChain4j dependencies
 
 Add the following dependencies:
 
@@ -59,9 +59,9 @@ Add the following dependencies:
         </dependency>
 ```
 
-Note: this is because CEQ is still using 4.14.0 which is missing some fixes available on 4.14.1-SNAPSHOT
+**NOTE**: this is because CEQ is still using 4.14.0 which is missing some fixes available on 4.14.1-SNAPSHOT
 
-Step 2
+## Step 2: remove camel-quarkus-langchain4j-tools
 
 ```
         <dependency>
@@ -70,7 +70,7 @@ Step 2
         </dependency>
 ```
 
-This is necessary because this extension brings `org.apache.camel.quarkus:camel-quarkus-support-langchain4j` which seems to force Quarkus' Langchain4j:
+**NOTE**: This is necessary because this extension brings `org.apache.camel.quarkus:camel-quarkus-support-langchain4j` which seems to force Quarkus' Langchain4j:
 
 ```
 [INFO] +- org.apache.camel.quarkus:camel-quarkus-langchain4j-tools:jar:3.26.0:compile
@@ -118,7 +118,7 @@ This is necessary because this extension brings `org.apache.camel.quarkus:camel-
 The tools dependency is already defined on the camel-langchain4j-agent component, so there is no harm done here.
 
 
-Step 3
+## Step 3: Add the langchain4j dependencies
 
 Add `langchain4j.version` property:
 
@@ -155,9 +155,8 @@ And the langchain4j dependencies:
         </dependency>
 ```
 
-Note: for reasons I don't yet fully understand, the code seems to try to use LangChain4j 1.1.0 which is old and doesn't have all the APIs that we need.
-
-
+**NOTE**: for reasons I don't yet fully understand, the code seems to try to use LangChain4j 1.1.0 which is old and doesn't have all the APIs that we need. These dependecies **are defined** in both Camel and Forage, and I believe it should not be necessary to add them here. We need to investigate why
+this is necessary.
 
 ## Alternative: apply the patch
 
@@ -165,4 +164,12 @@ If you just want to test something, you can do:
 
 `cd ceq-example && patch < ../patches/ceq.patch`
 
-Note: tested on macOs only
+**NOTE**: tested on macOs only
+
+## Run the code:
+
+
+```
+export GOOGLE_API_KEY=<your key>
+mvn quarkus:dev
+```
