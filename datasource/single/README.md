@@ -8,6 +8,13 @@ This guide demonstrates how to use Camel Forage to run Camel Routes that interac
 - PostgreSQL database
 - Maven (for Spring Boot export)
 
+## Forage setup
+
+Install forage plugin into Camel CLI tool by running:
+```bash
+amel plugin add forage --command='forage' --description='Forage Camel JBang Plugin' --artifactId='camel-jbang-plugin-forage' --groupId='org.apache.camel.forage' --version='1.0-SNAPSHOT' --gav='org.apache.camel.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
+```
+
 ## Quick Start
 
 ### 1. Start PostgreSQL Database
@@ -43,10 +50,14 @@ INSERT INTO bar VALUES (2, 'postgres 2');
 
 Execute the Camel route with the required dependencies:
 
+* For the Spring Boot runtime:
 ```bash
-camel run route.camel.yaml forage-datasource-factory.properties \
-    --dep=mvn:org.apache.camel.forage:forage-jdbc:1.0-SNAPSHOT \
-    --dep=mvn:org.apache.camel.forage:forage-jdbc-postgres:1.0-SNAPSHOT
+camel forage run route.camel.yaml forage-datasource-factory.properties --runtime=spring-boot
+```
+
+* For the Quarkus runtime:
+```bash
+camel forage run route.camel.yaml forage-datasource-factory.properties --runtime=quarkus
 ```
 
 ## DataSource Configuration
@@ -57,20 +68,29 @@ The integration automatically creates a single datasource named `dataSource` fol
 
 To convert your integration into a Spring Boot application:
 
+* For the Spring Boot runtime:
 ```bash
-camel export route.camel.yaml forage-datasource-factory.properties \
-    --dep=mvn:org.apache.camel.forage:forage-jdbc-starter:1.0-SNAPSHOT \
-    --dep=mvn:org.apache.camel.forage:forage-jdbc-postgres:1.0-SNAPSHOT \
+camel forage export route.camel.yaml forage-datasource-factory.properties \
     --runtime=spring-boot \
     --gav=com.foo:acme:1.0-SNAPSHOT
 ```
+* For the Quarkus runtime:
+```bash
+camel forage export route.camel.yaml forage-datasource-factory.properties --runtime=quarkus
+```
 
-### Running the Spring Boot Application
+### Running the  Application
 
-Start the exported Spring Boot application:
+Start the exported  application:
 
+* For the Spring Boot runtime:
 ```bash
 mvn spring-boot:run
+```
+
+* For the Quarkus Boot runtime:
+```bash
+mvn clean compile quarkus:dev
 ```
 
 The console output will match the standalone integration. Additionally, if you include Spring Boot Web and Actuator dependencies, you'll gain access to:

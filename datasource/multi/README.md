@@ -8,6 +8,13 @@ This project demonstrates how to use Camel Forage to run Apache Camel routes tha
 - Apache Camel CLI
 - Maven (for Spring Boot export)
 
+## Forage setup
+
+Install forage plugin into Camel CLI tool by running:
+```bash
+amel plugin add forage --command='forage' --description='Forage Camel JBang Plugin' --artifactId='camel-jbang-plugin-forage' --groupId='org.apache.camel.forage' --version='1.0-SNAPSHOT' --gav='org.apache.camel.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
+```
+
 ## Database Setup
 
 ### MySQL Database
@@ -61,40 +68,53 @@ INSERT INTO bar VALUES (2, 'postgres 2');
 
 ### Camel CLI
 
-Execute the integration with the following command:
+Execute the integration with the following command.
+* For Spring Boot runtime:
 
 ```bash
-camel run forage-multi-datasource-factory.properties \
+camel forage run forage-datasource-factory.properties \
           route.camel.yaml \
-          forage-datasource-factory.properties \
-          --dep=mvn:org.apache.camel.forage:forage-jdbc:1.0-SNAPSHOT \
-          --dep=mvn:org.apache.camel.forage:forage-jdbc-postgres:1.0-SNAPSHOT \
-          --dep=mvn:org.apache.camel.forage:forage-jdbc-mysql:1.0-SNAPSHOT
+          --runtime=spring-boot
+```
+* For Quarkus runtime:
+```bash
+camel forage run forage-datasource-factory.properties \
+          route.camel.yaml \
+          --runtime=spring-boot
 ```
 
-The integration creates two datasources (`ds1` and `ds2`) that can be referenced in Camel routes following Camel best practices. Configuration is managed through the properties files:
-- `forage-multi-datasource-factory.properties` - Multi-datasource configuration
-- `forage-datasource-factory.properties` - Individual datasource settings
+The integration creates two datasources (`ds1` and `ds2`) that can be referenced in Camel routes following Camel best practices. Configuration is managed through the properties file
+- `forage-datasource-factory.properties` - Datasources settings
 
-### Spring Boot Export
+### Export
 
 Export the project to a Camel Spring Boot application:
 
+#### Spring Boot runtime
+
 ```bash
-camel export forage-multi-datasource-factory.properties \
+camel forage export forage-datasource-factory.properties \
             route.camel.yaml \
-            forage-datasource-factory.properties \
-            --dep=mvn:org.apache.camel.forage:forage-jdbc-starter:1.0-SNAPSHOT \
-            --dep=mvn:org.apache.camel.forage:forage-jdbc-postgres:1.0-SNAPSHOT \
-            --dep=mvn:org.apache.camel.forage:forage-jdbc-mysql:1.0-SNAPSHOT \
             --runtime=spring-boot \
             --gav=com.foo:acme:1.0-SNAPSHOT
 ```
 
-Run the Spring Boot application:
+Run the application:
 
 ```bash
 mvn spring-boot:run
+```
+
+#### For Quuarkus runtime:
+```bash
+camel forage export forage-datasource-factory.properties \
+            route.camel.yaml \
+            --runtime=quarkus 
+```
+and run the application:
+
+```bash
+mvn clean compile quarkus:dev
 ```
 
 ## Features
@@ -103,10 +123,3 @@ mvn spring-boot:run
 - **Spring Boot Integration**: Export to Spring Boot for production deployments
 - **Monitoring**: When web and actuator dependencies are added, datasource and connection pool metrics are automatically exposed
 - **Best Practices**: Follows Apache Camel conventions for datasource configuration and routing
-
-## Dependencies
-
-- `org.apache.camel.forage:forage-jdbc:1.0-SNAPSHOT` (for plain camel)
-- `org.apache.camel.forage:forage-jdbc-postgres:1.0-SNAPSHOT` 
-- `org.apache.camel.forage:forage-jdbc-mysql:1.0-SNAPSHOT`
-- `org.apache.camel.forage:forage-jdbc-starter:1.0-SNAPSHOT` (for Spring Boot)
