@@ -149,27 +149,6 @@ cp booking-3.json data/inbox/
 6. **Transaction Commit**: Both operations succeed and transaction commits
 7. **Error Handling**: If seat unavailable, throws exception and rolls back transaction
 
-## Project Structure
-
-```
-event-booking/
-├── book.camel.yaml                      # Camel route definitions
-├── forage-datasource-factory.properties # Database configuration
-├── booking-1.json                       # Test: successful booking
-├── booking-2.json                       # Test: last seat booking
-├── booking-3.json                       # Test: sold out scenario
-└── data/
-    └── inbox/                           # Drop booking files here
-```
-
-## Configuration
-
-Database settings in `forage-datasource-factory.properties`:
-- **Connection**: PostgreSQL on localhost:5432
-- **Credentials**: test/test (adjust for your environment)
-- **Connection Pool**: 2-20 connections with timeouts
-- **Transactions**: Enabled with 30-second timeout
-
 ## Key Features Demonstrated
 
 - **ACID Transactions**: Ensures data consistency across multiple table operations
