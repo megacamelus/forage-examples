@@ -1,0 +1,73 @@
+- route:
+    id: file-to-booking-route
+    from:
+      id: from-8879
+      uri: file
+      parameters:
+        delete: true
+        directoryName: data/inbox
+        moveFailed: .error
+      steps:
+        - log:
+            id: log-1168
+            message: "New booking file detected: ${header.CamelFileName}"
+        - to:
+            id: to-3153
+            uri: direct
+            parameters:
+              name: bookEvent
+        - log:
+            id: log-1757
+            message: "Successfully processed booking file: ${header.CamelFileNameOnly}"
+- route:
+    id: event-booking-route
+    from:
+      id: from-3464
+      uri: direct
+      parameters:
+        name: bookEvent
+      steps:
+        - transacted:
+            id: transacted-3679
+            disabled: false
+        - log:
+            id: log-2507
+            message: Attempting to book seat for event ${jq(.eventId)} for user
+              ${jq(.userId)}
+        - toD:
+            id: to-1702
+            uri: sql
+            parameters:
+              query: UPDATE events SET available_seats = available_seats - 1 WHERE event_id =
+                ${jq(.eventId)} AND available_seats > 0
+        - choice:
+            id: choice-3247
+            otherwise:
+              id: otherwise-1084
+              steps:
+                - log:
+                    id: log-2094
+                    message: Event ${jq(.eventId)} is sold out! Rolling back transaction.
+                - throwException:
+                    id: throwException-3195
+                    exceptionType: java.lang.RuntimeException
+                    message: Event is sold out
+            when:
+              - id: when-2743
+                description: SQL_UPDATE_COUNT == 1
+                steps:
+                  - log:
+                      id: log-3342
+                      message: Seat successfully reserved for event ${jq(.eventId)}.
+                  - toD:
+                      id: to-2019
+                      uri: sql
+                      parameters:
+                        dataSource: "#dataSource"
+                        query: INSERT INTO bookings (event_id, user_id) VALUES (${jq(.eventId)},
+                          ${jq(.userId)})
+                  - log:
+                      id: log-4152
+                      message: Booking created for user ${jq(.userId)}. Transaction complete.
+                simple:
+                  expression: ${header.CamelSqlUpdateCount} == 1
