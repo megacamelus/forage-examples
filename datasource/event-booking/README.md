@@ -24,9 +24,9 @@ The application handles event seat reservations through a file-based workflow:
 - PostgreSQL database running on localhost:5432
 - Apache Camel JBang
 
-## Database Setup
-
 ### 1. Create Database Schema
+
+Run postgresql database with `camel infra run postgres`
 
 ```sql
 -- Create the events table to store event information
@@ -94,6 +94,12 @@ camel run book.camel.yaml forage-datasource-factory.properties \
   --dep=mvn:org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT
 ```
 
+or
+
+```bash
+camel forage run book.camel.yaml forage-datasource-factory.properties
+```
+
 ### Option 2: Spring Boot Export
 
 Export the integration as a Spring Boot application:
@@ -103,6 +109,12 @@ camel export book.camel.yaml forage-datasource-factory.properties \
   --dep=mvn:org.apache.camel.forage:forage-jdbc-starter:1.0-SNAPSHOT \
   --dep=mvn:org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
   --runtime=spring-boot
+```
+
+or
+
+```bash
+camel forage export book.camel.yaml forage-datasource-factory.properties --runtime=spring-boot
 ```
 
 Then run the exported Spring Boot application:
