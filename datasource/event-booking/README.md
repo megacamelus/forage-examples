@@ -91,7 +91,7 @@ Run the integration directly with Camel JBang:
 ```bash
 camel run book.camel.yaml forage-datasource-factory.properties \
   --dep=mvn:org.apache.camel.forage:forage-jdbc:1.0-SNAPSHOT \
-  --dep=mvn:org.apache.camel.forage:forage-jdbc-postgres:1.0-SNAPSHOT
+  --dep=mvn:org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT
 ```
 
 ### Option 2: Spring Boot Export
@@ -101,7 +101,7 @@ Export the integration as a Spring Boot application:
 ```bash
 camel export book.camel.yaml forage-datasource-factory.properties \
   --dep=mvn:org.apache.camel.forage:forage-jdbc-starter:1.0-SNAPSHOT \
-  --dep=mvn:org.apache.camel.forage:forage-jdbc-postgres:1.0-SNAPSHOT \
+  --dep=mvn:org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
   --runtime=spring-boot
 ```
 
