@@ -15,7 +15,7 @@
               query: select * from bar
         - log:
             id: log-2176
-            message: from sql postgres ds - ${body}
+            message: from sql postgresql ds - ${body}
         - to:
             id: to-1832
             uri: sql
@@ -45,7 +45,7 @@
               dataSourceName: ds1
         - log:
             id: log-2176-3777
-            message: from jdbc postgres - ${body}
+            message: from jdbc postgresql - ${body}
         - setBody:
             id: setBody-2643
             simple:
@@ -78,7 +78,7 @@
               dataSourceName: ds1
         - log:
             id: log-2176-3777-4035
-            message: from jdbc postgres - ${body}
+            message: from jdbc postgresql - ${body}
         - setBody:
             id: setBody-2643-3720
             simple:
