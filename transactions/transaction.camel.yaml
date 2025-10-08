@@ -1,0 +1,94 @@
+- route:
+    id: route-2258
+    from:
+      id: from-1949
+      uri: jms
+      parameters:
+        destinationName: in
+        transacted: true
+      steps:
+        - transacted:
+            id: transacted-3665
+        - log:
+            id: log-1002
+            message: Start transaction with message ${body} and event id ${headers.eventId}
+        - toD:
+            id: to-2098
+            uri: sql
+            parameters:
+              dataSource: "#dataSource"
+              query: INSERT INTO test (id, action) VALUES (${headers.eventId}, 'test')
+        - log:
+            id: log-2895
+            message: Query executed successfully
+        - to:
+            id: to-5840
+            uri: jms
+            parameters:
+              destinationName: out
+              transacted: true
+        - choice:
+            id: choice-5474
+            otherwise:
+              id: otherwise-4153
+              steps:
+                - log:
+                    id: log-2918
+                    message: End transaction with message ${body}
+            when:
+              - id: when-9952
+                steps:
+                  - throwException:
+                      id: throwException-8868-1434
+                      exceptionType: java.lang.RuntimeException
+                      message: Rollback transaction
+                simple:
+                  expression: ${body} == "ROLLBACK"
+- route:
+    id: route-2552
+    from:
+      id: from-2428
+      uri: timer
+      parameters:
+        period: "5000"
+        timerName: template
+      steps:
+        - setHeader:
+            id: setHeader-1335
+            name: eventId
+            simple:
+              expression: ${random(0,10000)}
+        - choice:
+            id: choice-2796
+            otherwise:
+              id: otherwise-1433
+              steps:
+                - log:
+                    id: log-2695
+                    message: Sending OK message
+                - setBody:
+                    id: setBody-3940
+                    simple:
+                      expression: OK
+                - to:
+                    id: to-8710
+                    uri: jms
+                    parameters:
+                      destinationName: in
+            when:
+              - id: when-4056
+                steps:
+                  - log:
+                      id: log-2821
+                      message: Sending rollback message
+                  - setBody:
+                      id: setBody-2605
+                      simple:
+                        expression: ROLLBACK
+                  - to:
+                      id: to-1730
+                      uri: jms
+                      parameters:
+                        destinationName: in
+                simple:
+                  expression: ${random(0,10)} > 5

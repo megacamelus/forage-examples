@@ -1,0 +1,35 @@
+- route:
+    id: jms-producer-route
+    from:
+      id: timer-producer
+      uri: timer
+      parameters:
+        period: "5000"
+        timerName: producer
+      steps:
+        - setBody:
+            id: set-message-body
+            simple:
+              expression: Hello from Camel Forage JMS!
+        - to:
+            id: send-to-queue
+            uri: jms
+            parameters:
+              destinationType: queue
+              destinationName: test.queue
+        - log:
+            id: log-sent
+            message: Message sent to JMS queue
+
+- route:
+    id: jms-consumer-route
+    from:
+      id: jms-consumer
+      uri: jms
+      parameters:
+        destinationType: queue
+        destinationName: test.queue
+      steps:
+        - log:
+            id: log-received
+            message: "Message received from JMS queue: ${body}"
