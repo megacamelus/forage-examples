@@ -12,7 +12,7 @@ This project demonstrates how to use Camel Forage to run Apache Camel routes tha
 
 Install forage plugin into Camel CLI tool by running:
 ```bash
-amel plugin add forage --command='forage' --description='Forage Camel JBang Plugin' --artifactId='camel-jbang-plugin-forage' --groupId='org.apache.camel.forage' --version='1.0-SNAPSHOT' --gav='org.apache.camel.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
+camel plugin add forage --command='forage' --description='Forage Camel JBang Plugin' --artifactId='camel-jbang-plugin-forage' --groupId='org.apache.camel.forage' --version='1.0-SNAPSHOT' --gav='org.apache.camel.forage:camel-jbang-plugin-forage:1.0-SNAPSHOT'
 ```
 
 ## Database Setup
