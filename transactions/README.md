@@ -74,16 +74,6 @@ jms.transaction.node.id=xa-node1
 
 ## Running the Example
 
-### Using Camel JBang (Java DSL)
-
-```bash
-camel run Route.java \
-  --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT \
-  --dep=org.apache.camel.forage:forage-jms:1.0-SNAPSHOT \
-  --dep=org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
-  --dep=org.apache.camel.forage:forage-jdbc:1.0-SNAPSHOT
-```
-
 ### Using Camel JBang (YAML DSL)
 
 ```bash
@@ -143,24 +133,24 @@ A timer-based route that generates test messages every 5 seconds:
 
 ## Key Features Demonstrated
 
-### ✅ Distributed XA Transactions
+### Distributed XA Transactions
 - Single transaction spanning JMS and JDBC
 - Two-phase commit protocol ensures ACID properties
 - Either all operations succeed or all fail
 
-### ✅ Automatic Rollback and Redelivery
+### Automatic Rollback and Redelivery
 - JMS message consumption is rolled back
 - Database insert is rolled back
 - Message returns to queue for redelivery
 - Broker automatically retriggers the route
 - After max redeliveries exhausted, message moves to DLQ
 
-### ✅ Transaction Recovery
+### Transaction Recovery
 - Narayana transaction manager logs all operations
 - Can recover in-doubt transactions after crash
 - Transaction logs stored in `tx-object-store/`
 
-### ✅ Shared Transaction Context
+### Shared Transaction Context
 - Same transaction manager instance across JMS and JDBC
 - Coordinated by Narayana XA transaction manager
 - Zero configuration - automatically wired by Camel Forage
@@ -173,6 +163,21 @@ ls -la tx-object-store/
 ```
 
 You'll see transaction logs for both JMS and JDBC operations.
+
+## Export
+
+### Camel Spring Boot
+
+The example can be exported to a Camel Spring Boot project via
+
+```bash
+camel export transaction.camel.yaml forage-connectionfactory.properties forage-datasource-factory.properties \
+ --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT \
+ --dep=org.apache.camel.forage:forage-jms-starter:1.0-SNAPSHOT \
+ --dep=org.apache.camel.forage:forage-jdbc-postgresql:1.0-SNAPSHOT \
+ --dep=org.apache.camel.forage:forage-jdbc-starter:1.0-SNAPSHOT \
+ --runtime=spring-boot --directory=spring-boot-export
+```
 
 ### Monitor Artemis Console
 
