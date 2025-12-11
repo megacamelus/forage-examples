@@ -16,18 +16,19 @@
             simple: give the details of user 123
         - to:
             id: to-1358
-            uri: langchain4j-agent:test
+            uri: langchain4j-agent:google
             parameters:
-              agentFactory: "#class:org.apache.camel.forage.agent.factory.MultiAgentFactory"
+              agent: "#google"
               tags: users
         - log: ${body}
 - route:
     id: ollama
     description: This route uses an Agent that leverages a locally hosted ollama
     from:
-      uri: timer:yaml
+      uri: timer
       parameters:
-        repeatCount: "1"
+        repeatCount: 500
+        timerName: yaml
       steps:
         - setHeader:
             id: setHeader-9341
@@ -39,9 +40,9 @@
             simple: What is the timezone in Brasilia?
         - to:
             id: to-1359
-            uri: langchain4j-agent:test
+            uri: langchain4j-agent:ollama
             parameters:
-              agentFactory: "#class:org.apache.camel.forage.agent.factory.MultiAgentFactory"
+              agent: "#ollama"
         - log: ${body}
 - route:
     id: route-3369

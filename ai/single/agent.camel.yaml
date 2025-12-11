@@ -15,9 +15,8 @@
             simple: give the details of user 123
         - to:
             id: to-1358
-            uri: langchain4j-agent:test
+            uri: langchain4j-agent:agent
             parameters:
-              agentFactory: "#class:org.apache.camel.forage.agent.factory.DefaultAgentFactory"
               tags: users
         - log: ${body}
 - route:
