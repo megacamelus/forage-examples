@@ -1,4 +1,4 @@
-camel run multi-agent.camel.yaml forage-agent-factory.properties forage-model-google-gemini.properties forage-model-ollama.properties \
+camel run multi-agent.camel.yaml forage-agent-factory.properties \
 	--dep=mvn:org.apache.camel.forage:forage-agent:1.0-SNAPSHOT \
 	--dep=mvn:org.apache.camel.forage:forage-memory-message-window:1.0-SNAPSHOT \
 	--dep=mvn:org.apache.camel.forage:forage-model-google-gemini:1.0-SNAPSHOT \

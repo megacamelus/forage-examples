@@ -2,9 +2,10 @@
     id: google
     description: This route uses an Agent that leverages Google Vertex
     from:
-      uri: timer:yaml
+      uri: timer
       parameters:
-        repeatCount: "1"
+        repeatCount: 1
+        timerName: yaml
       steps:
         - setHeader:
             id: setHeader-9346
@@ -18,7 +19,7 @@
             id: to-1358
             uri: langchain4j-agent:google
             parameters:
-              agent: "#google"
+              agent: "#foo"
               tags: users
         - log: ${body}
 - route:
@@ -27,7 +28,7 @@
     from:
       uri: timer
       parameters:
-        repeatCount: 500
+        repeatCount: 1
         timerName: yaml
       steps:
         - setHeader:
@@ -42,7 +43,7 @@
             id: to-1359
             uri: langchain4j-agent:ollama
             parameters:
-              agent: "#ollama"
+              agent: "#bar"
         - log: ${body}
 - route:
     id: route-3369
