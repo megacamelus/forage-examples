@@ -37,7 +37,7 @@ The `forage-datasource-factory.properties` file configures:
 
 2. **Run the integration**:
    ```bash
-   camel run jdbc-idempotent.camel.yaml forage-datasource-factory.properties \
+   camel run jdbc-idempotent.camel.yaml application.properties \
      --dep=mvn:org.apache.camel.forage:forage-jdbc:1.0-SNAPSHOT \
      --dep=mvn:org.apache.camel.forage:forage-jdbc-postgres:1.0-SNAPSHOT
    ```

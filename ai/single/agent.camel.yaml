@@ -17,6 +17,7 @@
             id: to-1358
             uri: langchain4j-agent:agent
             parameters:
+              agent: '#ollama'
               tags: users
         - log: ${body}
 - route:
