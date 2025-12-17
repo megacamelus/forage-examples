@@ -25,4 +25,4 @@
                 expression: eventId
 - beans:
     - name: groupedBodyAggregationStrategy
-      type: org.apache.camel.test.MyAggregationStrategy
+      type: org.forage.MyAggregationStrategy

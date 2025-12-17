@@ -56,16 +56,16 @@ camel infra run artemis
 
 ### JDBC Configuration (`forage-datasource-factory.properties`)
 ```properties
-jdbc.db.kind=postgresql
-jdbc.transaction.enabled=true
-jdbc.transaction.node.id=xa-node1
+forage.jdbc.db.kind=postgresql
+forage.jdbc.transaction.enabled=true
+forage.jdbc.transaction.node.id=xa-node1
 ```
 
 ### JMS Configuration (`forage-connectionfactory.properties`)
 ```properties
-jms.kind=artemis
-jms.transaction.enabled=true
-jms.transaction.node.id=xa-node1
+forage.jms.kind=artemis
+forage.jms.transaction.enabled=true
+forage.jms.transaction.node.id=xa-node1
 ```
 
 **Important**: Both configurations share the same:

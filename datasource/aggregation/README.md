@@ -58,7 +58,7 @@ The aggregation completes when either condition is met:
 ### Run the Integration
 
 ```bash
-camel forage run event-batching.camel.yaml forage-datasource-factory.properties MyAggregationStrategy.java --dep=org.kaoto:kaoto-camel-manager:1.0-SNAPSHOT
+camel forage run event-batching.camel.yaml forage-datasource-factory.properties org/forage/MyAggregationStrategy.java --dep=org.kaoto:kaoto-camel-manager:1.0-SNAPSHOT
 ```
 
 ### Send Test Events

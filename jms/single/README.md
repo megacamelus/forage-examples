@@ -37,13 +37,13 @@ The `forage-connectionfactory.properties` file configures the JMS connection:
 ### Using Camel JBang (Java DSL)
 
 ```bash
-camel run Route.java --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT
+camel run Route.java --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT --dep=org.apache.camel.forage:forage-jms:1.0-SNAPSHOT
 ```
 
 ### Using Camel JBang (YAML DSL)
 
 ```bash
-camel run route.camel.yaml --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT
+camel run route.camel.yaml --dep=org.apache.camel.forage:forage-jms-artemis:1.0-SNAPSHOT --dep=org.apache.camel.forage:forage-jms:1.0-SNAPSHOT
 ```
 
 ## Features Demonstrated
